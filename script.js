@@ -1,39 +1,6 @@
 var toDoList = document.querySelector('.todo-list');
 var addTask = document.querySelector('.add-task');
 var addBtn = document.querySelector('.add-button');
-var deleteBtn = document.querySelector('.delte');
-
-var arrayTask = [];
-
-
-addBtn.addEventListener('click', addToDoItem);
-deleteBtn.addEventListener('click');
-
-function addToDoItem(){
-    if(addTask.value === ''){
-       return alert('Поле не может быть пустым!');
-    }
-    arrayTask.unshift(createTaskItem());
-    addTask.value = '';
-    showTask();
-    deleteToDoItem();
-}
-
-function deleteToDoItem(){
-    var toDoItem = document.querySelector('.todo-item');
-    var deleteBtn = document.querySelector('.delete');
-    deleteBtn.addEventListener('click', deleteToDoItem);
-    
-    arrayTask.pop();
-    arrayTask.shift();
-    
-}
-
-function showTask(){
-    for(var i = 0; i < arrayTask.length; i++){
-        toDoList.appendChild(arrayTask[i]);
-    }
-}
 
 function createTaskItem(){
     var toDoItem = document.createElement('li');
@@ -58,5 +25,29 @@ function createTaskItem(){
 
     return toDoItem;  
 }
-// console.log(toDoItem);
-console.log(createTaskItem());
+
+function bindTaskEvents(toDoItem){
+    var deleteBtn = document.querySelector('.delete');
+
+    deleteBtn.onclick = deleteToDoItem;
+}
+
+function addToDoItem(){
+    if(addTask.value === ''){
+       return alert('Поле не может быть пустым!');
+    }
+
+    toDoList.appendChild(createTaskItem());
+    bindTaskEvents(createTaskItem());
+    addTask.value = '';
+}
+
+addBtn.addEventListener('click', addToDoItem);
+
+function deleteToDoItem(){
+    var toDoItem = this.parentNode;
+    toDoList.removeChild(toDoItem);
+
+}
+
+
