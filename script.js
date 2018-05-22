@@ -11,7 +11,7 @@ function createTaskItem(){
     checkbox.className = 'checkbox';
     
     var toDoTask = document.createElement('span');
-    toDoTask.innerHTML = addTask.value;
+    toDoTask.innerText = addTask.value;
     toDoTask.className = 'todo-task';
         
     var deleteBtn = document.createElement('input');
@@ -26,28 +26,28 @@ function createTaskItem(){
     return toDoItem;  
 }
 
+function addToDoItem(){
+    if(addTask.value){
+        var toDoItem = createTaskItem();
+        toDoList.appendChild(toDoItem);
+        bindTaskEvents(toDoItem);
+        addTask.value = '';
+    }else if(addTask.value === ''){
+        alert('Поле не может быть пустым!');
+    }
+}
+
+addBtn.onclick = addToDoItem;
+
 function bindTaskEvents(toDoItem){
-    var deleteBtn = document.querySelector('.delete');
+    var deleteBtn = toDoItem.querySelector('.delete');
 
     deleteBtn.onclick = deleteToDoItem;
 }
 
-function addToDoItem(){
-    if(addTask.value === ''){
-       return alert('Поле не может быть пустым!');
-    }
-
-    toDoList.appendChild(createTaskItem());
-    bindTaskEvents(createTaskItem());
-    addTask.value = '';
-}
-
-addBtn.addEventListener('click', addToDoItem);
-
 function deleteToDoItem(){
     var toDoItem = this.parentNode;
     toDoList.removeChild(toDoItem);
-
 }
 
 
